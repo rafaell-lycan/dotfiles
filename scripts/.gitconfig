@@ -6,6 +6,7 @@
   ui = true
 [alias]
   st = status -sb
+  br = branch
   ci = commit
   co = checkout
   d = diff
