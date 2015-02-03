@@ -38,3 +38,10 @@ apps=(
 # Default is: /Users/$USER/Applications
 echo "installing apps..."
 brew cask install --appdir="/Applications" ${apps[@]}
+
+# Link the folder to alfred preferences
+echo "Add into Alfred Default Results this path: \n \n"
+echo "Go to: /opt/homebrew-cask/Caskroom/ \n \n"
+
+echo "Clean up..."
+brew cask cleanup

@@ -3,7 +3,7 @@
 # Thanks to @mv and @fnando
 
 # Reload scripts
-alias rsrc='source ~/.bash/init.sh'
+alias rsrc='source ~/dotfiles/init.sh'
 
 # Interactive operations
 alias cp='cp -i'
