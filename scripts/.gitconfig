@@ -7,6 +7,7 @@
 [alias]
   st = status -sb
   br = branch
+  delete = branch -D
   ci = commit
   co = checkout
   d = diff
