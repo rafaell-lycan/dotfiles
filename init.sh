@@ -1,3 +1,6 @@
+# Copy dotfiles folder from $HOME directory
+cp -Rv $(pwd) $HOME
+
 # Configure OSX
 source $HOME/dotfiles/setup_osx.sh
 
