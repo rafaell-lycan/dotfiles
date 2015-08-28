@@ -1,9 +1,10 @@
 # Install some apps with Homebrew Cask
-echo "installing Homebrew Cask"
+echo "Installing Homebrew Cask"
 brew install caskroom/cask/brew-cask
 
-echo "update caskroom versions"
+echo "Update caskroom versions"
 brew tap caskroom/versions
+brew tap phinze/homebrew-cask
 
 apps=(
   alfred
