@@ -1,19 +1,24 @@
 [user]
   name = Rafaell Lycan
   email = sonny.webdsg@gmail.com
+[github]
+  user = rafaell-lycan
 [diff]
 [color]
   ui = true
+  interactive = auto
 [alias]
   st = status -sb
-  br = branch
+  br = branch -a
   delete = branch -D
-  ci = commit
+  ci = commit -v
   co = checkout
   d = diff
   dc = diff -- cached
   all = add . --all
   head = log -1
+  tags = tag -l
+  remotes = remote -v
   pom = push origin master
   phm = push heroku master
   rao = remote add origin
@@ -21,7 +26,15 @@
   lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --abbrev-commit
   l = !"git lg1"
   lg = !"git lg2"
+[merge]
+  ff = only
+[fetch]
+  prune = true
 [push]
-  default = simple
+  default = current
 [core]
+  editor = vim 
+  autocrlf = input
+  safecrlf = warn
+  quotepath = false
   excludesfile = /Users/rafaell/.gitignore_global
