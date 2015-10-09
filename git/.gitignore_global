@@ -1,5 +1,39 @@
+# General stuff (development)
+log
+tmp
+vendor
+bower_components/
+node_modules/
+
+# Mac OS
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Thumbnails
+Thumbs.db
+._*
+
+# Vim
+.*.s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+.ctrlp
+
+# Java / Scala / IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+*.classpath
+*.settings
+*.project
+*.idea
 *.swp
 *.swo
-.ctrlp
-.vimrc
