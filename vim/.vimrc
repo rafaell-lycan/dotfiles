@@ -1,5 +1,25 @@
 "" Remove compatibility with legacy vi
 set nocompatible
+filetype off
+
+"" Load plugins
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+"" Plugins
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'pangloss/vim-javascript'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-markdown'
+Plugin 'tomasr/molokai'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'tpope/vim-surround'
+Plugin 'bling/vim-airline'
+
+call vundle#end()
 
 filetype plugin indent on 
 
@@ -87,3 +107,7 @@ let g:Powerline_symbols = 'fancy'   "" Powerline
 if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
 endif
+
+"" NERDTreeTabs Toggle
+map <C-n> :NERDTreeToggle<CR>
+
