@@ -52,7 +52,7 @@ fi
 if [[ -d "$HOME/.dotfiles" ]]; then
   msg_ok "dotfiles"
 else
-  msg_run "dotfiles" "git clone https://github.com/mateusortiz/dotfiles.git $HOME/.dotfiles"
+  msg_run "dotfiles" "git clone https://github.com/rafaell-lycan/dotfiles.git $HOME/.dotfiles"
   git clone https://github.com/rafaell-lycan/dotfiles.git $HOME/.dotfiles
 fi
 

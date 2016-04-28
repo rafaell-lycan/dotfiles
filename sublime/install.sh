@@ -1,5 +1,5 @@
 #!/bin/sh
-source $home/.dotfiles/log.sh
+source $HOME/.dotfiles/log.sh
 
 # -- Subl ----------------------------------------------------------------------
 if [ -f "/usr/local/bin/subl" ]; then
