@@ -1,0 +1,25 @@
+.DS_Store
+*~
+*.classpath
+*.settings
+*.project
+*.swp
+*.swo
+.env
+.out
+.gradletasknamecache
+.idea
+
+# General stuff (development)
+log/
+tmp/
+vendor/
+bower_components/
+node_modules/
+
+# Don't commit "Scratchpad" Swift playgrounds
+Scratchpad.playground
+# Ignore all files whose name begins with "gitignore.*"
+gitignore.*
+
+

@@ -1,0 +1,52 @@
+[user]
+  name = Rafaell Lycan
+  email = sonny.webdsg@gmail.com
+[github]
+  user = rafaell-lycan
+[credential]
+  helper = osxkeychain
+[alias]
+  st = status -sb
+  br = branch -a
+  delete = branch -D
+  ci = commit -v
+  co = checkout
+  cb = checkout -b
+  d = diff
+  dc = diff -- cached
+  all = add . --all
+  count = !git shortlog -sn
+  head = log -1
+  tags = tag -l
+  remotes = remote -v
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
+  interactive = auto
+[core]
+  excludesfile = ~/.gitignore_global
+  editor = vim
+  pager = less -F -X
+  autocrlf = input
+  safecrlf = warn
+  quotepath = false
+[alias]
+  undo = reset --soft HEAD^
+  nuke = !git add . && git reset --hard HEAD
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  pom = push origin master
+  phm = push heroku master
+  lg1 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+  lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --abbrev-commit
+  l = !"git lg1"
+  lg = !"git lg2"
+[push]
+  default = simple
+[merge]
+  ff = only
+  ff = only
+[fetch]
+  prune = true

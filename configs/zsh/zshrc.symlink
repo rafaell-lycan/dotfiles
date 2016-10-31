@@ -1,0 +1,39 @@
+export ZSH="$HOME/.dotfiles/oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
+ZSH_CUSTOM="$HOME/.dotfiles/oh-my-zsh-custom"
+ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='green'
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='red'
+
+plugins=(
+  'brew'
+  'encode64'
+  'gem'
+  'git'
+  'git-extras'
+  'gitignore'
+  'gradle'
+  'history'
+  'node'
+  'npm'
+  'osx'
+  'python'
+  'pip'
+  'pod'
+  'rbenv'
+  'ruby'
+  'thefuck'
+  'themes'
+  'tmux'
+  'autoenv'
+  'virtualenvwrapper'
+  'zsh-completions'
+  'zsh-syntax-highlighting'
+  'zsh-navigation-tools'
+  'history-substring-search'
+)
+
+source $ZSH/oh-my-zsh.sh
