@@ -1,5 +1,5 @@
 # .dotfiles/configs/*
-CONFIGS="$(cd "$(dirname "$0")/.." && pwd -P)/configs"
+CONFIGS="$(cd "$HOME/.dotfiles" && pwd -P)/configs"
 
 # Source .localrc if found. Keep private stuff in here.
 LOCALRC="$HOME/.localrc"
