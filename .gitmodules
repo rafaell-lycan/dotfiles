@@ -4,3 +4,6 @@
 [submodule "oh-my-zsh-custom/plugins/zsh-syntax-highlighting"]
 	path = oh-my-zsh-custom/plugins/zsh-syntax-highlighting
 	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "build"]
+	path = build
+	url = https://github.com/caarlos0/shell-ci-build.git
