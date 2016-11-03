@@ -1,60 +1,20 @@
-# My dotfiles
+# Dotfiles!
 
-These are my bash scripts: bash, vim, personal files
+Dotfiles are how you personalize your system. These are mine.
 
-## How to install?
+## Install?
+Just run:
+
 ```bash
-$ curl -L https://raw.githubusercontent.com/rafaell-lycan/dotfiles/master/setup.sh | sh
+$ curl -L https://raw.githubusercontent.com/rafaell-lycan/dotfiles/master/bootstrap.sh | sh
 ```
 
-## What's included?
+## What's in it?
 All my command-line tools and its configurations. Have fun :)
 
-###### Shell
-- ZSH for shell
-- Oh my ZSH for ZSH tweaking
-- Theme : robbyrussell for better syntax highlight
+[ ] TODO::Add files description
 
-###### Vim
-- Vundle for plugins *
-- Theme : Molokai (Monokai)
+## License
+Dotfiles is copyright © 2014-2016. It is free software, and may be redistributed under the terms specified in the [`LICENSE`] file.
 
-###### Tmux
-- Powerline
-
-###### General
-- Homebrew for MacOS X package management
-- Git for code versioning
-- NodeJS for JavaScript programming
-
-###### NodeJS
-- N for Node version management
-- Bower for front-end package management *
-- Gulp & Grunt for task automation *
-- JSHint for JavaScript code quality *
-
-###### Ruby
-- Rbenv for Ruby version management
-- Ruby Build for installing different Ruby versions
-- Compass for Sass programming *
-- Jekyll for static generated website development *
-
-###### Python
-- Pip
-- Ansible *
-
-###### Php *
-- PHP 5.6 *
-- PHP-FPM *
-- PHPUnit *
-
-## How to update?
-Just go to `~/.dotfiles` and pull.
-
-```bash
-$ git pull
-```
-
-## Future
-- Change zsh theme to Pure
-- Install other dependencies
+[`LICENSE`]: /LICENSE
