@@ -3,7 +3,7 @@
 # Tells the shell script to exit if it encounters an error
 set -e
 
-cd "$(dirname $0)"
+DOTFILES_ROOT="$HOME/.dotfiles"
 
 # Log
 info () {
@@ -41,40 +41,30 @@ if test "$(which homebrew)"; then
 fi
 # ---
 
+# Git
+if test "$(which homebrew)"; then
+  info "* Installing Git..."
+  brew install git
+fi
+# ---
+
+# Dotfiles
+if [ ! -d "$DOTFILES_ROOT" ]; then
+  info "* Downloading Dotfiles..."
+  git clone https://github.com/rafaell-lycan/dotfiles.git $DOTFILES_ROOT
+fi
+# ---
+
 # Install all packages in the Brewfile
 echo "* Installing all packages in Brewfile..."
+cd $DOTFILES_ROOT
 brew update
 brew bundle -v
 brew cleanup
 brew cask cleanup
-
 # ---
 
-run_installers () {
-  local config_dir="$(pwd -P)/configs"
-
-  # Some installers need to run first (e.g. ruby, to install a rbenv ruby)
-  local prioritized=('ruby')
-
-  for installer in ${prioritized}; do
-    echo "  - $p/install.sh"
-    sh -c "$config_dir/$installer/install.sh"
-  done
-
-  # Find the rest of the installers and run them iteratively; order doesn't matter.
-  local installers=$(ls configs/**/install.sh | grep -v -F $prioritized)
-
-  # load the path files
-  for installer in ${installers}; do
-    conf="$(basename $(dirname ${installer}))"
-    name=$(basename $(dirname ${installer}))/$(basename ${installer})
-    echo "  - $name"
-    sh -c "${installer}"
-  done
-}
-
-echo "* Running all installers..."
-run_installers
+. "$DOTFILES_ROOT/dotfiles.sh"
 
 echo ""
 echo "* All done!"
