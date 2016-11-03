@@ -1,0 +1,10 @@
+language: bash
+sudo: required
+os:
+    - osx
+install:
+    - ./bootstrap.sh
+script:
+  - ./dotfiles.sh
+notifications:
+    email: false
