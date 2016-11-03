@@ -1,4 +1,19 @@
+# Compiled Python files
+*.pyc
+
+# Folder view configuration files
 .DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# General stuff (development)
 *~
 *.classpath
 *.settings
@@ -9,8 +24,6 @@
 .out
 .gradletasknamecache
 .idea
-
-# General stuff (development)
 log/
 tmp/
 vendor/
