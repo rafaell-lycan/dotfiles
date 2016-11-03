@@ -1,0 +1,82 @@
+[user]
+  name = Rafaell Lycan
+  email = sonny.webdsg@gmail.com
+[github]
+  user = rafaell-lycan
+[credential]
+  helper = osxkeychain
+[alias]
+  st = status -sb
+  br = branch
+  delete = branch -D
+  ci = commit -v
+  co = checkout
+  cb = checkout -b
+  d = diff
+  dc = diff -- cached
+  all = add . --all
+  count = !git shortlog -sn
+  head = log -1
+  tags = tag -l
+  remotes = remote -v
+[color]
+  ui = true
+  interactive = auto
+[core]
+  autocrlf = input
+  compression       = -1
+  editor            = vim
+
+  # Use custom `.gitignore`
+  excludesfile      = ~/.gitignore_global
+  pager             = less -F -X
+  safecrlf          = warn
+  quotepath         = false
+  precomposeunicode = true
+
+  # Treat spaces before tabs and all kinds of trailing whitespace as an error
+  # [default] trailing-space: looks for spaces at the end of a line
+  # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+  whitespace        = space-before-tab,-indent-with-non-tab,trailing-space
+
+  # Make `git rebase` safer on macOS
+  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+  trustctime        = false
+[alias]
+  undo = reset --soft HEAD^
+  nuke = !git add . && git reset --hard HEAD
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  pom = push origin master
+  phm = push heroku master
+  lg1 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+  lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --abbrev-commit
+  l = !"git lg1"
+  lg = !"git lg2"
+[apply]
+  whitespace = nowarn
+[help]
+  # Automatically correct and execute mistyped commands
+  autocorrect = 1
+[grep]
+  extendRegexp = true
+  lineNumber   = true
+[push]
+  default = simple
+  
+  # Make `git push` push relevant annotated tags when pushing branches out.
+  followTags = true
+[pull]
+  rebase = true
+[status]
+  submoduleSummary = true
+[diff]
+  submodule = log
+[merge]
+  ff = only
+  ff = only
+
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
+[fetch]
+  prune = true
