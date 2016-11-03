@@ -4,10 +4,6 @@ set -g default-terminal 'screen-256color'
 # set zsh as your default shell
 set-option -g default-shell /bin/zsh
 
-# utf is great, let us use that
-set -g utf8
-set-window-option -g utf8 on
-
 # keep your finger on ctrl, or don't
 bind-key ^D detach-client
 
@@ -43,7 +39,7 @@ set -g status-bg '#666666'
 set -g status-fg '#aaaaaa'
 
 # remove administrative debris (session name, hostname, time) in status bar
-set -g status-left #[fg=green][#[fg=blue]%Y-%m-%d #[fg=white]%H:%M#[default]#($HOME/bin/battery)#[fg=green]]
+set -g status-left '#[fg=green][#[fg=blue]%Y-%m-%d #[fg=white]%H:%M#[default]#($HOME/bin/battery)#[fg=green]]'
 set -g status-right '#[fg=green][#[fg=blue]#(ifconfig | awk "$1 == \'inet\' { print $2 }"|tail -1)#[fg=green]]'
 
 # increase scrollback lines
