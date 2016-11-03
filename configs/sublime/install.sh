@@ -1,4 +1,4 @@
-SUBL_PATH=$HOME/Library/Application\ Support/Sublime\ Text\ 3
+SUBL_PATH="$HOME/Library/Application\ Support/Sublime\ Text\ 3
 
 mkdir -p $SUBL_PATH/Packages/User $SUBL_PATH/Installed\ Packages
 
