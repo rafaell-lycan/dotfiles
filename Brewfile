@@ -19,6 +19,7 @@ brew 'openssl'
 brew 'htop-osx'
 brew 'imagemagick'
 brew 'ffmpeg'
+brew 'reattach-to-user-namespace'
 
 # Node
 brew 'node'

@@ -1,3 +1,6 @@
+# Enable pbcopy/paste in tmux session
+set-option -g default-command "reattach-to-user-namespace -l zsh"
+
 # improve colors
 set -g default-terminal 'screen-256color'
 
@@ -5,7 +8,7 @@ set -g default-terminal 'screen-256color'
 set-option -g default-shell /bin/zsh
 
 # keep your finger on ctrl, or don't
-bind-key ^D detach-client
+# bind-key ^D detach-client
 
 # remap prefix to Control + a
 unbind C-b
@@ -39,8 +42,8 @@ set -g status-bg '#666666'
 set -g status-fg '#aaaaaa'
 
 # remove administrative debris (session name, hostname, time) in status bar
-set -g status-left '#[fg=green][#[fg=blue]%Y-%m-%d #[fg=white]%H:%M#[default]#($HOME/bin/battery)#[fg=green]]'
-set -g status-right '#[fg=green][#[fg=blue]#(ifconfig | awk "$1 == \'inet\' { print $2 }"|tail -1)#[fg=green]]'
+set -g status-left ''
+set -g status-right ''
 
 # increase scrollback lines
 set -g history-limit 10000
