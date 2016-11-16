@@ -1,6 +1,10 @@
 # Enable pbcopy/paste in tmux session
 set-option -g default-command "reattach-to-user-namespace -l zsh"
 
+# use UTF8
+set -g utf8
+set-window-option -g utf8 on
+
 # improve colors
 set -g default-terminal 'screen-256color'
 
@@ -8,24 +12,42 @@ set -g default-terminal 'screen-256color'
 set-option -g default-shell /bin/zsh
 
 # keep your finger on ctrl, or don't
-# bind-key ^D detach-client
+bind-key ^D detach-client
 
 # remap prefix to Control + a
 unbind C-b
 set-option -g prefix C-a
+bind-key C-a last-window
 bind a send-prefix
 
+# activity monitoring
+setw -g monitor-activity on
+set -g visual-activity on
+
+# enable mouse control (tmux 2.1 and above)
+set -g mouse on
+
 # act like vim
+unbind [
+bind Escape copy-mode
 setw -g mode-keys vi
+
+set -g status-keys vi
+
 bind h select-pane -L
 bind j select-pane -D
 bind k select-pane -U
 bind l select-pane -R
 
-# getting interesting now, we use the vertical and horizontal
-# symbols to split the screen
+# shift arrow to switch windows
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
+# more intuitive keybindings for split panes using | and -
 bind | split-window -h
 bind - split-window -v
+unbind '"'
+unbind %
 
 # start window numbers at 1 to match keyboard order with tmux window order
 set -g base-index 1
@@ -34,19 +56,117 @@ set-window-option -g pane-base-index 1
 # renumber windows sequentially after closing any of them
 set -g renumber-windows on
 
+# automatically set window title
+set-window-option -g automatic-rename on
+set-option -g set-titles on
+
 # easily toggle synchronization
 bind s set-window-option synchronize-panes
 
-# soften status bar color from harsh green to light gray
-set -g status-bg '#666666'
-set -g status-fg '#aaaaaa'
+# command prompt for man pages
+bind / command-prompt -p "man page: " "split-window 'exec man %%'"
 
-# remove administrative debris (session name, hostname, time) in status bar
-set -g status-left ''
-set -g status-right ''
+# toggle statusbar
+bind-key b set-option status
+
+#########################
+### STATUS BAR DESIGN ###
+#########################
+
+# status line {
+set -g status-utf8 on
+set -g status-justify centre
+set -g status-interval 1
+set -g status-attr dim
+# }
+
+# messaging {
+set -g message-fg black
+set -g message-bg yellow
+set -g message-command-fg blue
+set -g message-command-bg black
+# }
+
+#window mode {
+setw -g mode-bg colour6
+setw -g mode-fg colour0
+# }
+
+# window status {
+setw -g window-status-format " #F#I:#W#F "
+setw -g window-status-current-format " #F#I:#W#F "
+setw -g window-status-format "#[fg=magenta]#[bg=black] #I #[bg=cyan]#[fg=colour8] #W "
+setw -g window-status-current-format "#[bg=brightmagenta]#[fg=colour8] #I #[fg=colour8]#[bg=colour14] #W "
+setw -g window-status-current-bg colour0
+setw -g window-status-current-fg colour11
+setw -g window-status-current-attr dim
+setw -g window-status-bg green
+setw -g window-status-fg black
+setw -g window-status-attr reverse
+# }
+
+# the modes {
+setw -g clock-mode-colour colour135
+setw -g mode-attr bold
+setw -g mode-fg colour196
+setw -g mode-bg colour238
+# }
+
+# the panes {
+set -g pane-border-bg default
+set -g pane-border-fg default
+# }
+
+# The statusbar {
+set -g status-position bottom
+set -g status-bg colour234
+set -g status-fg colour137
+set -g status-attr dim
+
+setw -g window-status-current-fg colour81
+setw -g window-status-current-bg colour238
+setw -g window-status-current-attr bold
+setw -g window-status-current-format ' #I#[fg=colour250]:#[fg=colour255]#W#[fg=colour50]#F '
+
+setw -g window-status-fg colour138
+setw -g window-status-bg colour235
+setw -g window-status-attr none
+setw -g window-status-format ' #I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#F '
+
+setw -g window-status-bell-attr bold
+setw -g window-status-bell-fg colour255
+setw -g window-status-bell-bg colour1
+# }
+
+# The messages {
+set -g message-fg green
+set -g message-bg default
+set -g message-attr bold
+# }
+
+# loud or quiet?
+set-option -g visual-bell off
+set-option -g visual-silence off
+set-option -g bell-action none
+
+# show host name and IP address on left side of status bar
+set -g status-left-length 70
+set -g status-left "#[fg=green]: #(whoami) : #[fg=brightblue]#(curl icanhazip.com) #[fg=yellow]#(ifconfig en0 | grep 'inet ' | awk '{print \"en0 \" $2}') #(ifconfig en1 | grep 'inet ' | awk '{print \"en1 \" $2}') #[fg=red]#(ifconfig tun0 | grep 'inet ' | awk '{print \"vpn \" $2}') "
+
+# show session name, window & pane number, date and time on right side of
+# status bar
+set -g status-right-length 60
+set -g status-right "#[fg=green][#[fg=blue]%Y-%m-%d #[fg=white]%H:%M#[default]#($HOME/bin/battery)#[fg=green]]"
+set -g status-right "#[fg=blue]#S #I:#P #[fg=yellow]:: %d %b %Y #[fg=green]:: %H:%M ::"
+
+set-option -g pane-border-fg default
+set-option -g pane-active-border-fg green
 
 # increase scrollback lines
 set -g history-limit 10000
+
+# for faster command sequence avoid delay for escape key press
+set -s escape-time 0
 
 # fix key bindings broken in tmux 2.1
 set -g assume-paste-time 0
