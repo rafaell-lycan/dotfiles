@@ -30,6 +30,7 @@ function server() {
 # (Requires PHP 5.4.0+.)
 function phpserver() {
 	local port="${1:-8080}";
-	sleep 1 && open "http://localhost:${port}/" &
+  local ip=$(localip)
+	sleep 1 && open "http://${ip}:${port}/" &
 	php -S "${ip}:${port}";
 }
