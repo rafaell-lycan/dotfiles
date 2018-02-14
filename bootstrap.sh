@@ -89,12 +89,6 @@ fi
 # ---
 
 # clone the project
-if test "$(which brew)"; then
-  info "* Installing Git..."
-  info "* Downloading Dotfiles..."
-  brew install git
-
-# clone the project
 if [ ! -d "$DOTFILES_ROOT" ]; then
   if test "$(which brew)"; then
     info "* Installing Git..."
