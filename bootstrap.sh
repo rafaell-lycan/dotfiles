@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Tells the shell script to exit if it encounters an error
-set -e
+# set -e
 
 # Log
 info () {
