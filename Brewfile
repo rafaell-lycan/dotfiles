@@ -36,7 +36,7 @@ brew 'redis'
 #############################
 
 # coding
-cask 'iterm'
+cask 'iterm2'
 cask 'mou'
 cask 'sublime-text'
 cask 'visual-studio-code'
@@ -45,7 +45,6 @@ cask 'visual-studio-code'
 cask '1password'
 cask 'alfred'
 cask 'dropbox'
-cask 'firefox'
 
 # browsers
 cask 'google-chrome'
@@ -55,7 +54,6 @@ cask 'firefox'
 # for fun
 cask 'spotify'
 cask 'vlc'
-cask 'utorrent'
 cask 'webtorrent'
 
 # other
