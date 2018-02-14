@@ -7,7 +7,7 @@ tap 'homebrew/core'
 tap 'homebrew/php'
 tap 'homebrew/services'
 
-# Fundamentals
+# env
 brew 'zsh'
 brew 'tmux'
 brew 'wget'
@@ -21,47 +21,48 @@ brew 'imagemagick'
 brew 'ffmpeg'
 brew 'reattach-to-user-namespace'
 
-# Node
+# dependencies
 brew 'node'
-
-# Ruby
+cask 'java'
 brew 'rbenv'
 brew 'ruby-build'
 
-# Java & Android
-cask 'java'
-brew 'gradle'
-brew 'android-sdk'
 
-# DBs
+# databases
 brew 'postgresql'
 brew 'mongodb'
 brew 'redis'
 
-# Apps
-cask '1password'
-cask 'iterm2'
-cask 'alfred'
-cask 'google-chrome-canary'
+#############################
+
+# coding
+cask 'iterm'
+cask 'mou'
 cask 'sublime-text'
-cask 'android-studio-canary'
-cask 'cloud'
+cask 'visual-studio-code'
+
+# essential
+cask '1password'
+cask 'alfred'
 cask 'dropbox'
-cask 'dash'
-cask 'slack'
-cask 'skype'
-cask 'sequel-pro'
-cask 'virtualbox'
-cask 'vagrant'
-cask 'spectacle'
-cask 'screenhero'
-cask 'istat-menus'
-cask 'spamsieve'
-cask 'caret'
-cask 'steam'
-cask 'tunnelblick'
-cask 'vlc'
-cask 'the-unarchiver'
+cask 'firefox'
+
+# browsers
+cask 'google-chrome'
+cask 'google-chrome-canary'
+cask 'firefox'
+
+# for fun
 cask 'spotify'
-cask 'divvy'
+cask 'vlc'
 cask 'utorrent'
+cask 'webtorrent'
+
+# other
+cask 'bartender'
+cask 'istat-menus'
+cask 'sequel-pro'
+cask 'skype'
+cask 'slack'
+cask 'the-unarchiver'
+cask 'tunnelblick'
