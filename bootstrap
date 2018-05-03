@@ -1,7 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
+# Dotfiles
 #
-# Tells the shell script to exit if it encounters an error
-# set -e
+# This installs some of the common dependencies needed (or at least desired)
+# using Homebrew.
+[[ "$(uname -s)" != "Darwin" ]] && exit 0
+
 
 # Log
 info () {
@@ -29,25 +33,19 @@ info '   __| | ___ | |_| |_ _| | ___  ___  '
 info '  / _` |/ _ \| __|  _| | |/ _ \/ __| '
 info ' | (_| | (_) | |_| | | | |  __/\__ \ '
 info '  \__,_|\___/ \__|_| |_|_|\___||___/ '
-info ' 
+info '
 
 # ---'
 
-# Dotfiles
-#
-# This installs some of the common dependencies needed (or at least desired)
-# using Homebrew.
-[[ "$(uname -s)" != "Darwin" ]] && exit 0
-
 DOTFILES_ROOT="$HOME/.dotfiles"
 
+# Uninstall Homebrew
 uninstallHomebrew() {
-  # Uninstall Homebrew
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
 }
 
+# Install Homebrew
 installHomebrew() {
-  # Install Homebrew
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
@@ -100,21 +98,5 @@ fi
 # ---
 
 cd $DOTFILES_ROOT
-
-# common dependencies from Brewfile
-if test "$(which brew)"; then
-  echo -e "
-    Common dependencies:
-    ffmpeg, gifsicle, git, grc, bash-completion, m-cli, nvm,
-    coreutils, diff-so-fancy, bash-git-prompt, yarn (without-node)
-  "
-  user "  Would like to install common dependencies? [y/n] "
-  read -r -e answer
-  
-  if [ "$answer" = "y" ]; then
-    brew bundle -v
-  fi
-fi
-
 . "$DOTFILES_ROOT/dotfiles.sh"
 success "* All done!"

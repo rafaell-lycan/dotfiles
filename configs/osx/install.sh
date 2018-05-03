@@ -1,3 +1,5 @@
+#!/bin/sh
+#
 # Sets reasonable OS X defaults.
 #
 # Or, in other words, set shit how I like in macOS.
@@ -7,9 +9,7 @@
 # More from:
 #    https://gist.github.com/brandonb927/3195465
 
-if [ "$(uname -s)" != "Darwin" ]; then
-  exit 0
-fi
+[[ "$(uname -s)" != "Darwin" ]] && exit 0
 
 set +e
 

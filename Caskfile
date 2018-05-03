@@ -1,0 +1,75 @@
+# Install native apps
+# Usage: `brew bundle Caskfile`
+
+# install cask
+tap 'caskroom/cask'
+tap 'caskroom/versions'
+tap 'caskroom/fonts'
+
+# fonts
+cask 'font-open-sans'
+cask 'font-roboto'
+cask 'font-pt-sans'
+cask 'font-lato'
+cask 'font-raleway'
+cask 'font-fira-code'
+
+# quick look plugins
+cask 'qlcolorcode'
+cask 'qlimagesize'
+cask 'qlmarkdown'
+cask 'qlstephen'
+cask 'quicklook-csv'
+cask 'quicklook-json'
+cask 'webpquicklook'
+cask 'quicklookase'
+cask 'qlvideo'
+cask 'suspicious-package'
+
+# main apps
+cask '1password'
+cask 'alfred'
+cask 'dropbox'
+cask 'evernote'
+cask 'expressvpn'
+cask 'istat-menus' #
+cask 'sizeup' #
+cask 'the-unarchiver'
+cask 'webtorrent'
+
+# browsers
+cask 'google-chrome'
+cask 'google-chrome-canary'
+cask 'firefox'
+
+# communication
+cask 'skype'
+cask 'franz'
+cask 'slack' #
+cask 'stride' #
+cask 'hipchat' #
+cask 'skype-for-business' #
+
+# java
+cask 'java' # 9
+
+# development
+cask 'couchbase-server-community' #
+cask 'cyberduck' #
+cask 'docker'
+cask 'hyper'
+cask 'iterm2' #
+cask 'postman'
+cask 'psequel' #
+cask 'robo-3t' #
+cask 'sublime-text' #
+cask 'sequel-pro' #
+cask 'tunnelblick' #
+cask 'visual-studio-code'
+
+# image processing
+cask 'sketch'
+
+# music & video
+cask 'spotify'
+cask 'vlc'

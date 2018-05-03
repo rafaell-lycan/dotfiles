@@ -2,11 +2,46 @@
 #
 # Run all dotfiles installers.
 
-set -e
-
 export PATH="$HOME/.dotfiles:$PATH"
 
 export DOTFILES_ROOT="$HOME/.dotfiles"
+
+# common dependencies from Brewfile and Caskfile
+if test "$(which brew)"; then
+
+  # Brewfile
+  echo -e "
+    1. Common dependencies:
+
+    ffmpeg, gifsicle, git, grc, bash-completion, m-cli, nvm,
+    coreutils, diff-so-fancy, bash-git-prompt, yarn
+  "
+  user "  Would like to install common dependencies? [y/n] "
+  read -r -e answer
+
+  if [ "$answer" = "y" ]; then
+    brew bundle --file=Brewfile; brew cleanup
+  fi
+
+  # Caskfile
+  echo -e "
+    2. Common cask dependencies:
+
+    From: https://github.com/sindresorhus/quick-look-plugins
+      - qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize
+        webpquicklook suspicious-package quicklookase qlvideo
+
+    Custom:
+      - font-fira-code itsycal the-unarchiver sublime-text vlc alfred
+        sizeup 1password dash cleanmymac sublime-text visual-studio-code
+  "
+  user "  Would like to install common dependencies? [y/n] "
+  read -r -e answerCask
+
+  if [ "$answerCask" = "y" ]; then
+    brew bundle --file=Caskfile; brew cask cleanup
+  fi
+fi
 
 link_file () {
   local src=$1 dst=$2

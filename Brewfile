@@ -1,66 +1,55 @@
-# Setup
-cask_args appdir: '/Applications'
+# Install command-line tools using Homebrew
+# Usage: `brew bundle Brewfile`
 
-tap 'homebrew/bundle'
-tap 'caskroom/versions'
 tap 'homebrew/core'
-tap 'homebrew/php'
 tap 'homebrew/services'
 
-# env
-brew 'zsh'
-brew 'tmux'
-brew 'wget'
-brew 'vim'
-brew 'git'
+# main packages
+brew 'coreutils' #
+brew 'diff-so-fancy' #
+brew 'docker-completion' #
+brew 'docker-compose-completion' #
 brew 'git-extras'
-brew 'tree'
-brew 'openssl'
-brew 'htop-osx'
-brew 'imagemagick'
-brew 'ffmpeg'
+brew 'git'
+brew 'htop' #
 brew 'reattach-to-user-namespace'
+brew 'tmux' #
+brew 'tree'
+brew 'vim', args: ['with-override-system-vi']
+brew 'wget'
+brew 'zsh'
+brew 'zsh-completions'
+brew 'zsh-syntax-highlighting' #
+
+# develop
+brew 'awscli' #
+brew 'docker'
+brew 'docker-compose'
+brew 'heroku' #
+brew 'm-cli' #
+brew 'openssl'
 
 # dependencies
+brew 'python' #
 brew 'node'
-cask 'java'
+brew 'ruby'
 brew 'rbenv'
 brew 'ruby-build'
-
+brew 'yarn', args: ['without-node']
 
 # databases
-brew 'postgresql'
+# brew 'elasticsearch', restart_service: true #
 brew 'mongodb'
-brew 'redis'
+brew 'mysql', restart_service: true #
+brew 'postgresql', restart_service: true
+brew 'redis', restart_service: true
 
-#############################
+# image processing
+brew 'imagemagick'
 
-# coding
-cask 'iterm2'
-cask 'mou'
-cask 'sublime-text'
-cask 'visual-studio-code'
+# video packages
+brew 'ffmpeg'
 
-# essential
-cask '1password'
-cask 'alfred'
-cask 'dropbox'
-
-# browsers
-cask 'google-chrome'
-cask 'google-chrome-canary'
-cask 'firefox'
-
-# for fun
-cask 'spotify'
-cask 'vlc'
-cask 'webtorrent'
-
-# other
-cask 'bartender'
-cask 'istat-menus'
-cask 'sequel-pro'
-cask 'skype'
-cask 'slack'
-cask 'the-unarchiver'
-cask 'tunnelblick'
+# php
+brew 'php' # 7.2
+brew 'composer'

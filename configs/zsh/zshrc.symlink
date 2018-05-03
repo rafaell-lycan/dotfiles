@@ -1,6 +1,12 @@
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+export PATH=~/devutils-bin:${PATH}
+export SE_PROJECTS_HOME=~/github/Email-Platform
+# !! slow 450ms :(
 export ZSH="$HOME/.dotfiles/oh-my-zsh"
 
-ZSH_THEME="robbyrussell"
+# Customize to your needs...
+ZSH_THEME="pure"
 ZSH_CUSTOM="$HOME/.dotfiles/oh-my-zsh-custom"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
@@ -9,28 +15,17 @@ HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='green'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='red'
 
 plugins=(
-  'brew'
-  'encode64'
-  'gem'
   'git'
   'git-extras'
   'gitignore'
-  'gradle'
   'history'
   'node'
   'npm'
   'osx'
-  'python'
-  'pip'
-  'pod'
-  'rbenv'
-  'ruby'
-  'thefuck'
-  'themes'
-  'tmux'
   'zsh-syntax-highlighting'
   'zsh-navigation-tools'
   'history-substring-search'
 )
 
+# source "$ZSH_CUSTOM/my_zsh_theme.sh"
 source $ZSH/oh-my-zsh.sh
