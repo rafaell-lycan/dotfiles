@@ -6,54 +6,87 @@
 [credential]
   helper = osxkeychain
 [alias]
-  st = status -sb
-  br = branch
-  delete = branch -D
-  ci = commit -v
-  co = checkout
-  cb = checkout -b
-  d = diff
-  dc = diff -- cached
-  all = add . --all
-  count = !git shortlog -sn
-  head = log -1
-  tags = tag -l
-  remotes = remote -v
+  # The basic aliases
+  st                  = status -sb
+  all                 = add . --all
+  remotes             = remote -v
+  changed             = show --pretty=\"format:\" --name-only
+  ci                  = commit -v
+  cm                  = commit -m
+  cp                  = cherry-pick
+
+  # Branch related aliases
+  br                  = branch
+  co                  = checkout
+  cb                  = checkout -b
+  delete              = branch -D
+
+  # Rebase related aliases
+  ri                  = rebase -i
+  rb                  = "!sh -c \"git rebase -i HEAD~$1\" -"
+  rc                  = rebase --continue
+  ra                  = rebase --abort
+  rs                  = rebase --skip
+  rod                 = rebase origin/develop
+  rom                 = rebase origin/master
+
+  # Stash related aliases
+  poop                = stash pop
+  wip                 = commit -m "WIP" -n
+
+  # Push related aliases
+  pod                 = push origin develop
+  pom                 = push origin master
+  phm                 = push heroku master
+  force               = push --force-with-lease
+
+  # Mistake related aliases
+  amend               = commit --amend --no-edit
+  undo                = reset --soft HEAD^
+  abort               = checkout .
+
+  # Diff related aliases
+  d                   = diff
+  dc                  = diff --cached
+  changes             = diff --name-status
+  diffstat            = diff --stat
+
+  # Log related aliases
+  lg                  = log --pretty=oneline --abbrev-commit --graph --decorate
+  overview            = log --all --oneline --no-merges
+  changelog           = "!sh -c \"git log --oneline --no-merges $1..HEAD\" -"
+  count               = !git shortlog -sn
+  head                = log -1
+  tags                = tag -l
+  last                = log -1 HEAD
+
 [color]
-  ui = true
+  diff        = auto
+  status      = auto
+  branch      = auto
   interactive = auto
+  ui          = true
 [core]
   autocrlf = input
   compression       = -1
   editor            = vim
-
-  # Use custom `.gitignore`
-  excludesfile      = ~/.gitignore_global
   pager             = less -F -X
   safecrlf          = warn
   quotepath         = false
   precomposeunicode = true
 
+  # Use custom `.gitignore`
+  excludesfile      = ~/.gitignore_global
+
   # Treat spaces before tabs and all kinds of trailing whitespace as an error
   # [default] trailing-space: looks for spaces at the end of a line
   # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
-  # whitespace        = space-before-tab,-indent-with-non-tab,trailing-space
+  # whitespace      = space-before-tab,-indent-with-non-tab,trailing-space
   whitespace        = cr-at-eol,blank-at-eof,blank-at-eol,tab-in-indent
 
   # Make `git rebase` safer on macOS
   # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
   trustctime        = false
-[alias]
-  undo = reset --soft HEAD^
-  nuke = !git add . && git reset --hard HEAD
-  unstage = reset HEAD --
-  last = log -1 HEAD
-  pom = push origin master
-  phm = push heroku master
-  lg1 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
-  lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --abbrev-commit
-  l = !"git lg1"
-  lg = !"git lg2"
 [apply]
   whitespace = nowarn
 [fetch]
@@ -64,9 +97,9 @@
 [grep]
   extendRegexp = true
   lineNumber   = true
-  threads = 8
+  threads      = 8
 [push]
-  default = simple
+  default    = current
 
   # Make `git push` push relevant annotated tags when pushing branches out.
   followTags = true
@@ -74,13 +107,12 @@
   rebase = true
 [status]
   submoduleSummary = true
-  showPatch = true
+  showPatch        = true
 [diff]
-  submodule = log
+  submodule           = log
   compactionHeuristic = true
 [merge]
-  ff = only
-  ff = only
+  ff  = false
 
   # Include summaries of merged commits in newly created merge commit messages
   log = true
