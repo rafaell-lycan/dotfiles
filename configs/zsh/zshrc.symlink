@@ -1,7 +1,10 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 export PATH=~/devutils-bin:${PATH}
-export SE_PROJECTS_HOME=~/github/Email-Platform
+
+# Variables
+export HOMEBREW_GITHUB_API_TOKEN=3013891ce050926223bcb28001ba6abd59de205f
+
 # !! slow 450ms :(
 export ZSH="$HOME/.dotfiles/oh-my-zsh"
 
