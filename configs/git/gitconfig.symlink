@@ -4,7 +4,7 @@
 [github]
   user = rafaell-lycan
 [credential]
-  helper = osxkeychain
+	helper = osxkeychain
 [alias]
   # The basic aliases
   st                  = status -sb
