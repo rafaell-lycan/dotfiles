@@ -9,7 +9,7 @@ export HOMEBREW_GITHUB_API_TOKEN=3013891ce050926223bcb28001ba6abd59de205f
 export ZSH="$HOME/.dotfiles/oh-my-zsh"
 
 # Customize to your needs...
-ZSH_THEME="pure"
+ZSH_THEME="refined"
 ZSH_CUSTOM="$HOME/.dotfiles/oh-my-zsh-custom"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
@@ -32,3 +32,11 @@ plugins=(
 
 # source "$ZSH_CUSTOM/my_zsh_theme.sh"
 source $ZSH/oh-my-zsh.sh
+
+# RN development variables
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH="/usr/local/sbin:$PATH"
