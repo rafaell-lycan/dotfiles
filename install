@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+function exit_with_message() {
+  echo $1
+  exit 1
+}
+
+# env exports
+DOTFILES_URL=https://github.com/fnando/dotfiles/archive/master.zip
+DOTFILES_ZIP=/tmp/dotfiles-master.zip
+DOTFILES_DIR=/tmp/dotfiles-master
+DOTFILES_ROOT="$HOME/.dotfiles"
+DOTFILES_BREW_PREFIX="$(brew --prefix)"
+export DOTFILES_ROOT
+export DOTFILES_BREW_PREFIX
+
+echo '                   '
+echo '     | |     | |  / _(_) |           '
+echo '   __| | ___ | |_| |_ _| | ___  ___  '
+echo '  / _` |/ _ \| __|  _| | |/ _ \/ __| '
+echo ' | (_| | (_) | |_| | | | |  __/\__ \ '
+echo '  \__,_|\___/ \__|_| |_|_|\___||___/ '
+echo '                   '
+
+# First, retrieve the zip file from Github.
+# It will use wget or curl (whichever is defined.)
+CURL_AVAILABLE=$(command -v curl)
+WGET_AVAILABLE=$(command -v wget)
+UNZIP_AVAILABLE=$(command -v unzip)
+BREW_AVAILABLE=$(command -v brew)
+
+if [[ "$UNZIP_AVAILABLE" = "" ]]; then
+  exit_with_message "#=> Make sure you have the unzip command available"
+fi
+
+# Check if installation must be from local files. If not, download zip file
+# and extract it to tmp directory.
+if [[ ! -d "$DOTFILES_ROOT" ]]; then
+  DOTFILES_DIR=/tmp/dotfiles-master
+
+  echo "#=> Downloading $DOTFILES_URL to $DOTFILES_ZIP"
+
+  if [[ "$CURL_AVAILABLE" != "" ]]; then
+    curl -Ls -o $DOTFILES_ZIP $DOTFILES_URL
+  elif [[ "$WGET_AVAILABLE" != "" ]]; then
+    wget -q -O $DOTFILES_ZIP $DOTFILES_URL
+  else
+    exit_with_message "#=> Please make sure curl or wget is installed"
+  fi
+
+  [ -f "$DOTFILES_ZIP" ] || exit_with_message "#=> ERROR: Couldn't download ${DOTFILES_URL}."
+
+  # Now, unzip the directory
+  rm -rf $DOTFILES_DIR
+  unzip -q $DOTFILES_ZIP -d /tmp
+  mv $DOTFILES_DIR $DOTFILES_ROOT
+  echo "OK"
+fi
+
+# Install Homebrew if not available
+if [[ "$BREW_AVAILABLE" == "" ]]; then
+  echo "#=> Installing Homebrew for you..."
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  echo "OK"
+else
+
+# Install Homebrew dependencies
+# TODO: Redirect to DOTFILES_ROOT before
+echo "#=> Installing Homebrew for you..."
+brew bundle
+echo "OK"
+
+# Install oh-my-zsh
+# TODO: Add oh-my-zsh
+
+# Change ZSH as default shell
+# chsh -s /bin/zsh
+
+SHELL_NAME="zsh"
+
+# Copy files
+find ${DOTFILES_ROOT}/home -maxdepth 1 -mindepth 1 -exec cp -R "{}" $HOME/ \;
+cp -R ${DOTFILES_ROOT}/.${SHELL_NAME} $HOME/
+find ${DOTFILES_ROOT}/common -maxdepth 1 -mindepth 1 -exec cp -R "{}" $HOME/.${SHELL_NAME} \;
+
+for filename in $(ls -A $DOTFILES_ROOT/install); do
+  SOURCE_PATH="$DOTFILES_ROOT/install/$filename"
+  TARGET_PATH="$HOME/$filename"
+
+  if [[ ! -f "$TARGET_PATH" ]]; then
+    echo -n "#=> Copying $filename... "
+    cp "$SOURCE_PATH" "$TARGET_PATH"
+    echo "OK"
+  fi
+done
+
+# Source init file
+source $HOME/.zsh/exports.sh
+
+# Set up local directory
+mkdir -p $HOME/local
+[ -x "/usr/bin/chflags" ] && chflags hidden $HOME/local
+
+# Copy binaries to ~/local/bin
+echo -n "#=> Copying binaries... "
+cp -R $DOTFILES_ROOT/bin $HOME/local
+find $HOME/local/bin -type f -exec chmod +x {} \;
+echo "OK"
+
+# Clone vundle.
+if [[ ! -d "$HOME/.vim/bundle/vundle" ]]; then
+  echo -n "#=> Cloning vim's vundle plugin... "
+  git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle &> /dev/null
+  echo "OK"
+fi
+
+# Set up SSH.
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/config
+mkdir -p ~/.ssh/controlmaster
+chmod 700 ~/.ssh/controlmaster
+
+# Set up zsh-plugins
+mkdir -p ~/.zsh-plugins
+for plugin in $(cat $HOME/.default-zsh-plugins); do
+  TARGET_DIR="$HOME/.zsh-plugins/$(basename $plugin)"
+
+  if [[ ! -d "$TARGET_DIR" ]]; then
+    echo -n "#=> Installing $plugin... "
+    git clone --quiet "https://github.com/$plugin.git" "$TARGET_DIR"
+    echo "OK"
+  fi
+done
+
+# Set macOS preferences
+# TODO: Run macOS.sh
+
+echo '#=> Done! Restart your terminal!'
+
+#############################################
+# POC
+# https://github.com/DiegoRBaquero/dotfiles/blob/master/install.sh

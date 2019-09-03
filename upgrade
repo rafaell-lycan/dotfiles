@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "#=> Upgrading zsh-plugins"
+for plugin in $(ls ~/.zsh-plugins); do
+  echo -n "  • $plugin... "
+
+  TARGET_DIR="$HOME/.zsh-plugins/$plugin"
+  cd "$TARGET_DIR"
+  git reset --hard --quiet
+  git pull --rebase --quiet
+
+  echo "OK"
+done
+
+echo -n "#=> Upgrading vundle plugins... "
+vim +PluginInstall +qall
+echo "OK"
+
+echo '#=> Done!'

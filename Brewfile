@@ -1,55 +1,92 @@
-# Install command-line tools using Homebrew
-# Usage: `brew bundle Brewfile`
-
+# Taps
+tap 'homebrew/bundle'
+tap 'homebrew/fonts'
+tap 'homebrew/cask-versions'
+tap 'homebrew/cask'
 tap 'homebrew/core'
 tap 'homebrew/services'
 
-# main packages
-brew 'coreutils' #
-brew 'diff-so-fancy' #
-brew 'docker-completion' #
-brew 'docker-compose-completion' #
-brew 'git-extras'
+# Binaries
+brew 'bat'
+brew 'coreutils'
+brew 'diff-so-fancy'
+brew 'docker-completion'
+brew 'docker-compose-completion'
+brew 'fd'
+brew 'ffmpeg'
+brew 'fpp'
 brew 'git'
-brew 'htop' #
+brew 'git-extras'
+brew 'grc'
+brew 'htop'
+brew 'httpie'
+brew 'imagemagick'
 brew 'reattach-to-user-namespace'
-brew 'tmux' #
+brew 'thefuck'
+brew 'tmux'
+brew 'tokei'
+brew 'trash'
 brew 'tree'
-brew 'vim', args: ['with-override-system-vi']
 brew 'wget'
-brew 'zsh'
+brew 'wifi-password'
+brew 'z'
 brew 'zsh-completions'
-brew 'zsh-syntax-highlighting' #
+brew 'zsh'
 
-# develop
-brew 'awscli' #
+# Dev
+brew 'awscli'
+brew 'composer'
 brew 'docker'
 brew 'docker-compose'
-brew 'heroku' #
-brew 'm-cli' #
-brew 'openssl'
-
-# dependencies
-brew 'python' #
+brew 'heroku'
 brew 'node'
+brew 'openssl'
 brew 'ruby'
 brew 'rbenv'
 brew 'ruby-build'
-brew 'yarn', args: ['without-node']
+brew 'vim', args: ['with-override-system-vi']
+brew 'yarn', args: ['ignore-dependencies']
 
-# databases
-# brew 'elasticsearch', restart_service: true #
-brew 'mongodb'
-brew 'mysql', restart_service: true #
+# Databases
+brew 'mongodb', restart_service: true
+brew 'mysql', restart_service: true
 brew 'postgresql', restart_service: true
-brew 'redis', restart_service: true
 
-# image processing
-brew 'imagemagick'
+# Apps
+cask '1password'
+cask 'alfred'
+cask 'docker'
+cask 'dropbox'
+cask 'firefox'
+cask 'franz'
+cask 'google-chrome'
+cask 'grammarly'
+cask 'postman'
+cask 'skype'
+cask 'slack'
+cask 'spotify'
+cask 'telegram'
+cask 'the-unarchiver'
+cask 'visual-studio-code'
+cask 'vlc'
+cask 'webtorrent'
 
-# video packages
-brew 'ffmpeg'
+# Quicklook
+cask 'qlcolorcode'
+cask 'qlimagesize'
+cask 'qlmarkdown'
+cask 'qlstephen'
+cask 'qlvideo'
+cask 'quicklook-csv'
+cask 'quicklook-json'
+cask 'quicklookase'
+cask 'suspicious-package'
+cask 'webpquicklook'
 
-# php
-brew 'php' # 7.2
-brew 'composer'
+# Fonts
+cask 'font-open-sans'
+cask 'font-roboto'
+cask 'font-pt-sans'
+cask 'font-lato'
+cask 'font-raleway'
+cask 'font-fira-code'

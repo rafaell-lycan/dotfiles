@@ -1,0 +1,14 @@
+.DS_Store
+.svn
+*.swp
+.*.sw?
+.rvmrc
+.rbenv-version
+Thumbs.db
+.vagrant
+.gemtags
+.tags
+.tags_sorted_by_file
+node_modules
+bower_components
+.env

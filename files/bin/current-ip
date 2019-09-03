@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+script=current-ip-$(uname | tr '[:upper:]' '[:lower:]')
+$script $1
