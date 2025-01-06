@@ -1,0 +1,8 @@
+Host *
+  UseKeychain yes
+  AddKeysToAgent yes
+  AddressFamily inet
+  Compression yes
+  ControlMaster auto
+  ForwardAgent yes
+  IdentityFile ~/.ssh/id_ed25519

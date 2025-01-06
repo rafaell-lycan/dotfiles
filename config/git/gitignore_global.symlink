@@ -1,0 +1,33 @@
+# Compiled Python files
+*.pyc
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# General stuff (development)
+*~
+*.classpath
+*.settings
+*.project
+*.swp
+*.swo
+.env
+.gradletasknamecache
+.idea
+log/
+tmp/
+vendor/
+bower_components/
+node_modules/
+
+# Ignore all files whose name begins with "gitignore.*"
+gitignore.*

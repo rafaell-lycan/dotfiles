@@ -1,156 +1,111 @@
 #!/bin/bash
-#
+set -e
+
 # Run all dotfiles installers.
-
-export PATH="$HOME/.dotfiles:$PATH"
-
+# export PATH="$HOME/.dotfiles:$PATH"
 export DOTFILES_ROOT="$HOME/.dotfiles"
+CONFIG_DIR="$DOTFILES_ROOT/config"
+BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 
-# common dependencies from Brewfile and Caskfile
-if test "$(which brew)"; then
+echo ''
 
-  # Brewfile
-  echo -e "
-    1. Common dependencies:
+info () {
+  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
 
-    ffmpeg, gifsicle, git, grc, bash-completion, m-cli, nvm,
-    coreutils, diff-so-fancy, bash-git-prompt, yarn
-  "
-  user "  Would like to install common dependencies? [y/n] "
-  read -r -e answer
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
 
-  if [ "$answer" = "y" ]; then
-    brew bundle --file=Brewfile; brew cleanup
-  fi
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
 
-  # Caskfile
-  echo -e "
-    2. Common cask dependencies:
-
-    From: https://github.com/sindresorhus/quick-look-plugins
-      - qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize
-        webpquicklook suspicious-package quicklookase qlvideo
-
-    Custom:
-      - font-fira-code itsycal the-unarchiver sublime-text vlc alfred
-        sizeup 1password dash cleanmymac sublime-text visual-studio-code
-  "
-  user "  Would like to install common dependencies? [y/n] "
-  read -r -e answerCask
-
-  if [ "$answerCask" = "y" ]; then
-    brew bundle --file=Caskfile; brew cask cleanup
-  fi
-fi
-
-link_file () {
-  local src=$1 dst=$2
-
-  local overwrite= backup= skip=
-  local action=
-
-  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]; then
-    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]; then
-      local currentSrc="$(readlink $dst)"
-
-      if [ "$currentSrc" == "$src" ]; then
-        skip=true
-      else
-        user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
-        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-        read -n 1 action
-
-        case "$action" in
-          o )
-            overwrite=true;;
-          O )
-            overwrite_all=true;;
-          b )
-            backup=true;;
-          B )
-            backup_all=true;;
-          s )
-            skip=true;;
-          S )
-            skip_all=true;;
-          * )
-            ;;
-        esac
-      fi
-    fi
-
-    overwrite=${overwrite:-$overwrite_all}
-    backup=${backup:-$backup_all}
-    skip=${skip:-$skip_all}
-
-    if [ "$overwrite" == "true" ]; then
-      rm -rf "$dst"
-      success "removed $dst"
-    fi
-
-    if [ "$backup" == "true" ]; then
-      mv "$dst" "${dst}.backup"
-      success "moved $dst to ${dst}.backup"
-    fi
-
-    if [ "$skip" == "true" ]; then
-      success "skipped $src"
+# Define a function which rename a `target` file to `target.backup` if the file
+# exists and if it's a 'real' file, ie not a symlink
+backup() {
+  target=$1
+  if [ -e "$target" ]; then
+    if [ ! -L "$target" ]; then
+      mv "$target" "$target.backup"
+      info "-----> Moved your old $target config file to $target.backup"
     fi
   fi
+}
 
-  if [ "$skip" != "true" ]; then  # "false" or empty
-    ln -s "$1" "$2"
-    success "linked $1 to $2"
+symlink() {
+  file=$1
+  link=$2
+  if [ ! -e "$link" ]; then
+    info "-----> Symlinking your new $link"
+    ln -sf $file $link
   fi
+}
+
+# Install Homebrew packages
+install_packages() {
+    info "-----> Installing Homebrew packages"
+    brew bundle --no-upgrade --file="$DOTFILES_ROOT/Brewfile"
 }
 
 install_dotfiles () {
   local overwrite_all=false backup_all=false skip_all=false
 
-  for src in $(find -H "$DOTFILES_ROOT/configs" -maxdepth 2 -name '*.symlink' -not -path '*.git*'); do
-    echo "$HOME/.$(basename "${src%.*}")"
-    dst="$HOME/.$(basename "${src%.*}")"
-    link_file "$src" "$dst"
+  for file in $(find -H "$DOTFILES_ROOT/config" -maxdepth 2 -name '*.symlink' -not -path '*.git*'); do
+    local source="$file"
+    local filename=$(basename "$file")
+    local target="$HOME/.${filename%.*}"
+
+    if [ -f "$target" ]; then
+      backup "$target"
+    fi
+
+    symlink "$source" "$target"
   done
 }
 
-run_installers () {
-  echo "install"
-  local config_dir="$DOTFILES_ROOT/configs"
-
-  # Some installers need to run first (e.g. ruby, to install a rbenv ruby)
-  local prioritized=('ruby')
-
-  for installer in ${prioritized}; do
-    echo "  - $p/install.sh"
-    sh -c "$config_dir/$installer/install.sh"
-  done
-
-  # Find the rest of the installers and run them iteratively; order doesn't matter.
-  local installers=$(ls $DOTFILES_ROOT/configs/**/install.sh | grep -v -F $prioritized)
-
-  # load the path files
-  for installer in ${installers}; do
-    conf="$(basename $(dirname ${installer}))"
-    name=$(basename $(dirname ${installer}))/$(basename ${installer})
-    echo "  - $name"
-    sh -c "${installer}"
-  done
+install_zsh_plugins() {
+  CURRENT_DIR=`pwd`
+  ZSH_PLUGINS_DIR=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+  mkdir -p "$ZSH_PLUGINS_DIR" && cd "$ZSH_PLUGINS_DIR"
+  if [ ! -d "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" ]; then
+    info "-----> Installing zsh plugins"
+    git clone https://github.com/zsh-users/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting
+  fi
+  cd "$CURRENT_DIR"
 }
 
-echo "* Running all installers..."
-run_installers
+setup_git() {
+    if [ -z "$(git config --global user.name)" ] || [ -z "$(git config --global user.email)" ]; then
+        info "-----> Git user not configured."
+        read -p "Enter your Git name: " git_name
+        read -p "Enter your Git email: " git_email
 
-# Grab all submodules before moving on
-info "Initializing submodules..."
-git submodule update --init --recursive
+        git config --global user.name "$git_name"
+        git config --global user.email "$git_email"
+        success "-----> Git user configured."
+    else
+        info "-----> Git user already configured."
+    fi
+}
 
-# Install the dot files
-info "Installing dotfiles..."
-install_dotfiles
+setup_macos () {
+  if [ "$(uname -s)" = "Darwin" ]; then
+    info "-----> Configuring OSX defaults..."
+    sh -c  "$CONFIG_DIR/osx/defaults.sh"
+  fi
+}
 
-# Change ZSH as default shell
-chsh -s /bin/zsh
+# Main installation
+main() {
+    install_packages
+    install_dotfiles
+    install_zsh_plugins
+    setup_git
+    setup_macos
+}
 
-echo ""
-echo "Done!"
+main

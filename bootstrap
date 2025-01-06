@@ -1,19 +1,13 @@
 #!/bin/bash
-
-# Dotfiles
 #
-# This installs some of the common dependencies needed (or at least desired)
-# using Homebrew.
-[[ "$(uname -s)" != "Darwin" ]] && exit 0
+# bootstrap installs things.
 
+set -e
 
-# Log
+echo ''
+
 info () {
   printf "\r  [ \033[00;34m..\033[0m ] $1\n"
-}
-
-user () {
-  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
 }
 
 success () {
@@ -23,80 +17,50 @@ success () {
 fail () {
   printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
   echo ''
-}
-# ---
-
-# Hello :)
-info '                   '
-info '     | |     | |  / _(_) |           '
-info '   __| | ___ | |_| |_ _| | ___  ___  '
-info '  / _` |/ _ \| __|  _| | |/ _ \/ __| '
-info ' | (_| | (_) | |_| | | | |  __/\__ \ '
-info '  \__,_|\___/ \__|_| |_|_|\___||___/ '
-info '
-
-# ---'
-
-DOTFILES_ROOT="$HOME/.dotfiles"
-
-# Uninstall Homebrew
-uninstallHomebrew() {
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+  exit
 }
 
-# Install Homebrew
-installHomebrew() {
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-}
+# Check if running on macOS
+if [ "$(uname -s)" != "Darwin" ]; then
+    fail "-----> This script only supports macOS"
+fi
 
-# Check for Homebrew
-if test ! "$(which brew)"; then
-  user "  Would like to install Homebrew? [y/n] "
-  read -r -e answer
+# Check for Command Line Tools
+if ! xcode-select -p &>/dev/null; then
+    info "-----> Installing Command Line Tools..."
+    xcode-select --install
+    success "-----> After installation completes, re-run this script"
+    exit 0
+fi
 
-  if [ "$answer" = "y" ]; then
-    echo "  Installing Homebrew for you..."
-    installHomebrew
-  fi
+# Install or update Homebrew
+if ! command -v brew &>/dev/null; then
+    info "-----> Installing Homebrew for you..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 else
-  if test "$(which brew)"; then
-    user "  Would like to re-install Homebrew? [y/n] "
-    read -r -e answer
-
-    if [ "$answer" = "y" ]; then
-      uninstallHomebrew
-      installHomebrew
-    fi
-  fi
-fi
-
-if test "$(which brew)"; then
-  user "  Would like to update, upgrade and cleanup Homebrew? [y/n] "
-  read -r -e answer
-
-  if [ "$answer" = "y" ]; then
-    info " Running 'brew update'..."
+    info "-----> Updating Homebrew..."
     brew update
-    info " Running 'brew upgrade'..."
-    brew upgrade
-    info " Running 'brew cleanup'..."
-    brew cleanup
-    brew prune
-  fi
 fi
-# ---
 
-# clone the project
+# Clone/update dotfiles repository
+DOTFILES_ROOT="$HOME/.dotfiles"
+REPO_URL="https://github.com/rafaell-lycan/dotfiles.git"
+
 if [ ! -d "$DOTFILES_ROOT" ]; then
-  if test "$(which brew)"; then
-    info "* Installing Git..."
-    brew install git
-  fi
-  info "* Downloading Dotfiles..."
-  git clone https://github.com/rafaell-lycan/dotfiles.git $DOTFILES_ROOT
+    info "-----> Cloning dotfiles repository..."
+    git clone "$REPO_URL" "$DOTFILES_ROOT"
+else
+    info "-----> Updating dotfiles repository..."
+    cd "$DOTFILES_ROOT"
+    git pull origin master
 fi
-# ---
 
+# Run installer
 cd $DOTFILES_ROOT
 . "$DOTFILES_ROOT/dotfiles.sh"
-success "* All done!"
+
+# Refresh the current terminal with the newly installed configuration
+exec zsh
+
+echo "👌 Carry on with git setup!"
