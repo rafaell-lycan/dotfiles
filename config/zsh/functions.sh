@@ -1,4 +1,3 @@
-
 # Deletes the current directory's generated files and reinstalls Node modules.
 trashy() {
   printf "🟡 Deleting generated files...\n"
@@ -50,8 +49,8 @@ killport() {
 
 GIT_PERSONAL_NAME="Rafaell Lycan"
 GIT_PERSONAL_EMAIL="sonny.webdsg@gmail.com"
-GIT_WORK_NAME="Rafael Almeida"
-GIT_WORK_EMAIL="rafael.almeida@typeform.com"
+GIT_WORK_NAME=""
+GIT_WORK_EMAIL=""
 
 # Display Git user information
 git_whoami() {

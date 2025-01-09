@@ -23,5 +23,5 @@ source $ZSH/oh-my-zsh.sh
 
 source $zsh_dir/aliases.sh
 source $zsh_dir/functions.sh
-# source $zsh_dir/paths.sh
+source $zsh_dir/paths.sh
 source $zsh_dir/tools.sh

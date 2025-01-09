@@ -90,6 +90,11 @@ setup_git() {
     else
         info "-----> Git user already configured."
     fi
+
+    # SSH key configuration
+    # git config --global user.signingkey ~/.ssh/id_ed25519.pub
+    # git config --global commit.gpgsign true
+    # git config --global gpg.format ssh
 }
 
 setup_macos () {
@@ -103,7 +108,7 @@ setup_macos () {
 main() {
     install_packages
     install_dotfiles
-    install_zsh_plugins
+    # install_zsh_plugins
     setup_git
     setup_macos
 }

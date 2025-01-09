@@ -16,6 +16,11 @@ if command -v fnm >/dev/null 2>&1; then
   alias nvm="fnm" # Use fnm as nvm
 fi
 
+# Like cat but with syntax highlighting
+if command -v bat >/dev/null 2>&1; then
+  alias cat="bat" # Use bat as cat
+fi
+
 # --------------- load zsh files ----------------
 # Fuzzy finder bindings
 if [ -f "$HOME/.fzf.zsh" ]; then

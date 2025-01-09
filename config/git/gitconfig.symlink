@@ -1,12 +1,45 @@
-[user]
-  name = Rafaell Lycan
-  email = sonny.webdsg@gmail.com
-[github]
-  user = rafaell-lycan
-[url "git@github.com:"]
-	insteadOf = https://github.com/
-[credential]
-	helper = osxkeychain
+# Put this stuff in ~/.gitconfig.local
+# [user]
+#   name = Rafaell Lycan
+#   email = sonny.webdsg@gmail.com
+# 	signingkey = ~/.ssh/id_ed25519.pub
+# [credential]
+# 	helper = osxkeychain
+# [commit]
+# 	gpgsign = true
+# [gpg]
+# 	format = ssh
+
+# Local/private config goes in the include
+[include]
+	path = ~/.gitconfig.local
+
+[color]
+	ui = auto
+
+[core]
+  autocrlf = input
+  compression       = -1
+  editor            = code --wait
+  pager             = less -FRSX
+  safecrlf          = warn
+  quotepath         = false
+  precomposeunicode = true
+
+  # Use custom `.gitignore`
+  excludesfile      = ~/.gitignore_global
+
+  # Treat spaces before tabs and all kinds of trailing whitespace as an error
+  # [default] trailing-space: looks for spaces at the end of a line
+  # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+  # whitespace      = space-before-tab,-indent-with-non-tab,trailing-space
+  whitespace        = cr-at-eol,blank-at-eof,blank-at-eol,tab-in-indent
+
+  # Make `git rebase` safer on macOS
+  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+  trustctime        = false
+	ignorecase = false
+
 [alias]
   # The basic aliases
   st                  = status -sb
@@ -22,6 +55,8 @@
   co                  = checkout
   cb                  = checkout -b
   delete              = branch -D
+  # branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
+
 
   # Rebase related aliases
   ri                  = rebase -i
@@ -62,67 +97,54 @@
   tags                = tag -l
   last                = log -1 HEAD
 
-[color]
-  diff        = auto
-  status      = auto
-  branch      = auto
-  interactive = auto
-  ui          = true
-[core]
-  autocrlf = input
-  compression       = -1
-  editor            = code --wait
-  pager             = less -FRSX
-  safecrlf          = warn
-  quotepath         = false
-  precomposeunicode = true
-
-  # Use custom `.gitignore`
-  excludesfile      = ~/.gitignore_global
-
-  # Treat spaces before tabs and all kinds of trailing whitespace as an error
-  # [default] trailing-space: looks for spaces at the end of a line
-  # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
-  # whitespace      = space-before-tab,-indent-with-non-tab,trailing-space
-  whitespace        = cr-at-eol,blank-at-eof,blank-at-eol,tab-in-indent
-
-  # Make `git rebase` safer on macOS
-  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
-  trustctime        = false
-	ignorecase = false
 [apply]
   whitespace = nowarn
+
 [fetch]
   prune = true
-[help]
-  # Automatically correct and execute mistyped commands
-  autocorrect = 1
-[grep]
-  extendRegexp = true
-  lineNumber   = true
-  threads      = 8
-[push]
-  default    = current
 
-  # Make `git push` push relevant annotated tags when pushing branches out.
-  followTags = true
+[help]
+	# Automatically correct and execute mistyped commands.
+  autocorrect = 1
+
+[push]
+	# https://git-scm.com/docs/git-config#git-config-pushdefault
+	default = simple
+	# Make `git push` push relevant annotated tags when pushing branches out.
+	followTags = true
+
 [pull]
-  rebase = true
-[status]
-  submoduleSummary = true
-  showPatch        = true
+	ff = only
+	default = current
+  # rebase = true
+
+# [status]
+#   submoduleSummary = true
+#   showPatch        = true
+
 [diff]
-  submodule           = log
-  compactionHeuristic = true
-  tool                = meld
+  tool = meld
+	# Show blocks of moved text of at least 20 alphanumeric characters differently than adds/deletes
+	# https://blog.github.com/2018-04-05-git-217-released/
+	colorMoved = default
+	# Detect copies in addition to renames
+	renames = copies
+	# A la `git submodule summary`
+	submodule = log
+
 [difftool]
   prompt = false
+
 [difftool "meld"]
   cmd = meld "$LOCAL" "$REMOTE"
-[merge]
-  ff = false
 
+[merge]
+  # ff = false
   # Include summaries of merged commits in newly created merge commit messages
   log = true
+
 [fetch]
   prune = true
+
+[init]
+	defaultBranch = main

@@ -1,5 +1,7 @@
 zmodload zsh/zprof
 
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
 #----------------------------------------
 # general options
 #----------------------------------------
@@ -68,6 +70,7 @@ plugins=(
   zsh-autosuggestions # [1]
   history-substring-search # [0]
   zsh-syntax-highlighting # Warning: Must be last sourced!
+  # zsh-history-substring-search
 )
 
 # plugin configuration
