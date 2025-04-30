@@ -11,7 +11,8 @@ if [ -d "$VSCODE_PATH" ]; then
 fi
 
 # pnpm
-PNPM_HOME="/Users/rafael.almeida/Library/pnpm"
-if [[ ":$PATH:" != *":$PNPM_HOME:"* ]]; then
-  export PATH="$PNPM_HOME:$PATH"
-fi
+export PNPM_HOME="/Users/rafael.almeida/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac

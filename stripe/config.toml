@@ -1,0 +1,10 @@
+color = ''
+project-name = 'default'
+
+[default]
+account_id = 'acct_1RAuVMPKCBgLhmC1'
+device_name = 'C9J4LYC09D'
+display_name = 'Hiperative sandbox'
+test_mode_api_key = 'rk_test_51RAuVMPKCBgLhmC1Ng1s3yzOa91sQnGY7AOuqdYwcbWzjNFclbqD4r3hHipk3AZcoYM3vu0XJ1NCLsNn9KniBLZB00WarlVmyA'
+test_mode_key_expires_at = '2025-07-05'
+test_mode_pub_key = 'pk_test_51RAuVMPKCBgLhmC13FTPnJENi1CoaUuBRuZFNsb0XtIKHPQ6lxMSKldV4SiQfsMmCcipeQZok4UHsMryFNDST3xd00aowi1zWO'

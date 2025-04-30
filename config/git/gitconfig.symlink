@@ -20,7 +20,8 @@
 [core]
   autocrlf = input
   compression       = -1
-  editor            = code --wait
+  # code --wait?
+  editor            = vim
   pager             = less -FRSX
   safecrlf          = warn
   quotepath         = false
@@ -107,11 +108,14 @@
 	# Automatically correct and execute mistyped commands.
   autocorrect = 1
 
+# push easily. http://stackoverflow.com/a/23918418/89484
 [push]
 	# https://git-scm.com/docs/git-config#git-config-pushdefault
 	default = simple
 	# Make `git push` push relevant annotated tags when pushing branches out.
 	followTags = true
+  # automatically setup remote on git push on a new branch
+  autoSetupRemote = true
 
 [pull]
 	ff = only
@@ -148,3 +152,11 @@
 
 [init]
 	defaultBranch = main
+[gpg]
+	format = ssh
+[user]
+	signingkey = /Users/rafael.almeida/.ssh/id_ed25519.pub
+[commit]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = /Users/rafael.almeida/.config/git/allowed_signers
